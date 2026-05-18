@@ -1,0 +1,123 @@
+spring:
+  application:
+    name: msa-service-recaudacion
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # LOCAL (desarrollo): Authorization Server embebido en este mismo servicio
+          jwk-set-uri: http://localhost:${server.port}/oauth2/jwks
+          # -------------------------------------------------------
+          # WSO2 Identity Server: descomentar para integracion con API Manager
+          # jwk-set-uri: https://<wso2-host>:9443/oauth2/jwks
+          # issuer-uri: https://<wso2-host>:9443/oauth2/token
+          # -------------------------------------------------------
+
+server:
+  port: 443
+  # Resolucion correcta de IP cuando hay proxy/WSO2 delante
+  forward-headers-strategy: NATIVE
+
+logging:
+  config: classpath:logback-spring.xml
+
+api:
+  base-path: /api/v1
+  endpoints:
+    reporte-recaudacion: /reporte-recaudacion
+    nota-debito: /nota-debito
+
+sunat:
+  acreditacion:
+    base-path: /v1/recaudacion/tributaria
+    endpoints:
+      archivo: /archivo
+
+# ----------------------------------------------------------------------------
+# OAuth2 Authorization Server local (solo para desarrollo / mock)
+# En produccion este bloque se reemplaza por la configuracion de WSO2 IS
+# ----------------------------------------------------------------------------
+security:
+  oauth2:
+    client-id: sunat-client
+    client-secret: "{noop}sunat-secret-key"
+    token-ttl-seconds: 3600
+
+# ============================================================================
+# WSO2 API Manager / Identity Server
+# Este bloque define la especificacion del recurso a publicar en el API Manager
+# y los parametros de conexion al Identity Server.
+# Entregar este bloque al administrador del API Manager para el registro del API.
+# ============================================================================
+wso2:
+  api-manager:
+    api:
+      name: MSA Service Recaudacion
+      version: v1
+      context: /api/v1
+      description: "Microservicio mock de recaudacion MEF-SUNAT para pruebas de conectividad"
+      endpoints:
+        - path: /reporte-recaudacion
+          method: POST
+          scope: recaudacion.write
+          description: "Registrar reporte de recaudacion"
+        - path: /reporte-recaudacion
+          method: GET
+          scope: recaudacion.read
+          description: "Consultar reportes con filtros opcionales"
+        - path: /reporte-recaudacion/todos
+          method: GET
+          scope: recaudacion.read
+          description: "Listar todos los reportes registrados (verificacion de persistencia)"
+        - path: /nota-debito
+          method: POST
+          scope: recaudacion.write
+          description: "Registrar nota de debito"
+        - path: /v1/recaudacion/tributaria/archivo
+          method: POST
+          scope: recaudacion.write
+          description: "Recibir archivo de acreditacion MEF-SUNAT"
+    oauth2:
+      grant-type: client_credentials
+      token-endpoint: https://<wso2-host>:9443/oauth2/token
+      jwks-uri: https://<wso2-host>:9443/oauth2/jwks
+      issuer: https://<wso2-host>:9443/oauth2/token
+      scopes:
+        - name: recaudacion.read
+          description: "Consultar reportes de recaudacion"
+        - name: recaudacion.write
+          description: "Registrar reportes de recaudacion"
+    identity-server:
+      host: <wso2-host>
+      port: 9443
+      client-id: sunat-client
+      client-secret: <sunat-secret-key>
+
+# ----------------------------------------------------------------------------
+# Análisis de negocio — archivo de reportes recibidos de SUNAT
+# Cada POST a /api/v1/reporte-recaudacion agrega una línea JSON al archivo.
+# Formato: JSON Lines (.jsonl) — un objeto JSON por línea.
+# ----------------------------------------------------------------------------
+analisis:
+  reportes-file: ./data/reportes-recibidos.jsonl
+  excel-file: ./data/reportes.xlsx
+
+# ----------------------------------------------------------------------------
+# SpringDoc / OpenAPI — configuración de la UI y generación del contrato
+# El contrato exportable se descarga desde: GET /v3/api-docs.yaml
+# ----------------------------------------------------------------------------
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+    enabled: true
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+    display-request-duration: true
+    try-it-out-enabled: true
+    filter: true
+  writer-with-order-by-keys: true
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  show-actuator: false

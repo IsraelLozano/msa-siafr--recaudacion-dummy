@@ -1,0 +1,16 @@
+2026-05-11 10:54:08.193 ip=127.0.0.1 method=GET uri=/api/v1/reporte-recaudacion?numeroReporteRecaudacion=02345678 status=200 duration=161ms
+2026-05-11 10:54:08.431 ip=127.0.0.1 method=POST uri=/api/v1/reporte-recaudacion status=201 duration=123ms
+2026-05-11 10:54:08.545 ip=127.0.0.1 method=GET uri=/api/v1/reporte-recaudacion status=200 duration=2ms
+2026-05-11 12:22:06.807 ip=0:0:0:0:0:0:0:1 method=POST uri=/api/conciliacion-sunat/reporte-diario/upload status=201 duration=416ms
+2026-05-11 14:17:35.141 ip=0:0:0:0:0:0:0:1 method=POST uri=/api/conciliacion-sunat/reporte-diario/upload status=201 duration=81ms
+2026-05-11 14:17:41.902 ip=0:0:0:0:0:0:0:1 method=POST uri=/api/conciliacion-sunat/reporte-diario/upload status=201 duration=15ms
+2026-05-11 14:17:50.287 ip=0:0:0:0:0:0:0:1 method=POST uri=/api/conciliacion-sunat/reporte-diario/upload status=201 duration=7ms
+2026-05-11 14:18:29.808 ip=0:0:0:0:0:0:0:1 method=POST uri=/api/conciliacion-sunat/reporte-diario/upload status=500 duration=7ms
+2026-05-11 14:18:52.871 ip=0:0:0:0:0:0:0:1 method=POST uri=/api/conciliacion-sunat/reporte-diario/upload status=500 duration=3ms
+2026-05-11 14:31:38.758 ip=0:0:0:0:0:0:0:1 method=POST uri=/api/conciliacion-sunat/reporte-diario/upload status=500 duration=94ms
+2026-05-11 14:36:13.301 ip=0:0:0:0:0:0:0:1 method=POST uri=/api/conciliacion-sunat/reporte-diario/upload status=500 duration=3ms
+2026-05-11 14:36:43.766 ip=0:0:0:0:0:0:0:1 method=POST uri=/api/conciliacion-sunat/reporte-diario/upload status=400 duration=146ms
+2026-05-11 14:37:15.975 ip=0:0:0:0:0:0:0:1 method=POST uri=/api/conciliacion-sunat/reporte-diario/upload status=201 duration=24ms
+2026-05-11 15:05:04.568 ip=127.0.0.1 method=GET uri=/api/v1/reporte-recaudacion?numeroReporteRecaudacion=02345678 status=200 duration=123ms
+2026-05-11 15:05:04.774 ip=127.0.0.1 method=POST uri=/api/v1/reporte-recaudacion status=201 duration=79ms
+2026-05-11 15:05:04.875 ip=127.0.0.1 method=GET uri=/api/v1/reporte-recaudacion status=200 duration=2ms
