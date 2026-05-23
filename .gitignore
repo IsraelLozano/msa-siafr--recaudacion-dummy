@@ -4,3 +4,20 @@ build/
 .idea/
 *.iml
 out/
+
+# Logs
+logs/
+*.log
+# OS generated files
+.DS_Store
+Thumbs.db
+# Eclipse files
+.project
+.classpath
+.settings/
+
+# data files
+data/
+*.json
+*.jsonl
+*.xlsx
